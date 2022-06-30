@@ -8,10 +8,17 @@
 import SwiftUI
 
 struct ContentView: View {
+    var emojiGame: EmojiMemoryGame
+    
+    var columns: [GridItem] =
+    Array(repeating: GridItem(), count: 2)
+    
     var body: some View {
-        HStack {
-            ForEach(0..<4) {
-                index in CardView(isFaceUp: true)
+        LazyVGrid(columns: columns) {
+            ForEach(emojiGame.cards) {
+                card in CardView(card: card).onTapGesture {
+                    emojiGame.choose(card: card)
+                }
             }
         }.padding()
         
@@ -26,20 +33,22 @@ struct ContentView: View {
 
 
 struct CardView: View {
-    var isFaceUp: Bool
+    var card: MemoryGame<String>.Card
     
     var body: some View {
         ZStack {
-            if(isFaceUp) {
+            if(card.isFaceUp) {
                 RoundedRectangle(cornerRadius: 8)
                     .stroke(lineWidth: 3)
                 RoundedRectangle(cornerRadius:8)
                     .fill(Color.white)
-                Text("👻").font(Font.largeTitle)
+                Text(card.content).font(Font.largeTitle)
             } else {
                 RoundedRectangle(cornerRadius:8)
             }
-        }.foregroundColor(Color.orange)
+        }
+        .foregroundColor(Color.orange)
+        
     }
 }
 
@@ -49,11 +58,8 @@ struct CardView: View {
 
 
 
-
-
-
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(emojiGame: EmojiMemoryGame())
     }
 }

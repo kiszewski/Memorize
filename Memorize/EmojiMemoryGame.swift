@@ -7,8 +7,8 @@
 
 import Foundation
 
-class EmojiMemoryGame {
-    private let game: MemoryGame<String> = EmojiMemoryGame.createGame()
+class EmojiMemoryGame: ObservableObject  {
+    @Published private var game: MemoryGame<String> = EmojiMemoryGame.createGame()
     
     static func createGame() -> MemoryGame<String> {
         

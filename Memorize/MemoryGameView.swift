@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  MemoryGameView.swift
 //  Shared
 //
 //  Created by Leonardo Kiszewski on 26/06/22.
@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct ContentView: View {
-    var emojiGame: EmojiMemoryGame
+struct MemoryGameView: View {
+    @ObservedObject var emojiGame: EmojiMemoryGame
     
     var columns: [GridItem] =
     Array(repeating: GridItem(), count: 2)
@@ -48,6 +48,7 @@ struct CardView: View {
             }
         }
         .foregroundColor(Color.orange)
+        .frame(width: 80, height: 80, alignment: Alignment.center)
         
     }
 }
@@ -60,6 +61,6 @@ struct CardView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(emojiGame: EmojiMemoryGame())
+        MemoryGameView(emojiGame: EmojiMemoryGame())
     }
 }

@@ -22,7 +22,22 @@ struct MemoryGame<Element> {
     
     var cards: Array<Card>
     
-    func choose(item: Card) {}
+    mutating func choose(item: Card) {
+        print("Choose: \(item.id)")
+        let index: Int = indexOf(card: item)
+        cards[index].isFaceUp = !cards[index].isFaceUp
+    }
+    
+    private func indexOf(card: Card) -> Int {
+        for index in 0..<cards.count {
+            
+            if(cards[index].id == card.id) {
+                return index
+            }
+        }
+        
+        return -1
+    }
     
     struct Card: Identifiable {
         var id: Int

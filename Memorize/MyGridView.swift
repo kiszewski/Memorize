@@ -20,9 +20,11 @@ struct MyGridView<Item, ItemView>: View where Item: Identifiable, ItemView: View
     
     func body(for layout: GridLayout) -> some View {
         ForEach(items) { item in
+            let index = items.firstIndex(of: item)
+            
             onBuild(item)
                 .frame(width: layout.itemSize.width, height: layout.itemSize.height)
-                .position(layout.itemPosition(itemAtIndex: items.firstIndex(of: item)))
+                .position(layout.itemPosition(itemAtIndex: index ?? 0))
         }
     }
 }

@@ -10,24 +10,14 @@ import SwiftUI
 struct MemoryGameView: View {
     @ObservedObject var emojiGame: EmojiMemoryGame
     
-    var columns: [GridItem] =
-    Array(repeating: GridItem(), count: 2)
-    
     var body: some View {
-        LazyVGrid(columns: columns) {
-            ForEach(emojiGame.cards) {
-                card in CardView(card: card).onTapGesture {
-                    emojiGame.choose(card: card)
-                }
+        MyGridView(items: emojiGame.cards) { card in
+            CardView(card: card).onTapGesture {
+                emojiGame.choose(card: card)
+                   
             }
-        }.padding()
-        
-//        Same:
-//        HStack (content: {
-//            ForEach(0..<4, content:  {
-//                index in CardView(isFaceUp: true)
-//            })
-//        }).padding()
+            .padding()
+        }
     }
 }
 
@@ -48,8 +38,6 @@ struct CardView: View {
             }
         }
         .foregroundColor(Color.orange)
-        .frame(width: 80, height: 80, alignment: Alignment.center)
-        
     }
 }
 

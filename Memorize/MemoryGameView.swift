@@ -14,12 +14,20 @@ struct MemoryGameView: View {
         VStack {
             MyGridView(items: emojiGame.cards) { card in
                 CardView(card: card).onTapGesture {
-                    if(!card.isMatched) {
-                        emojiGame.choose(card: card)
+                    withAnimation {
+                        if(!card.isMatched) {
+                            emojiGame.choose(card: card)
+                        }
                     }
                 }.padding()
             }
-            Button(action: emojiGame.restart, label: { Text("Reiniciar")})
+            Button(
+                action: {
+                    withAnimation {
+                        emojiGame.restart()
+                    }
+            },
+                label: { Text("Reiniciar") })
         }
     }
 }
@@ -29,7 +37,8 @@ struct CardView: View {
     var card: MemoryGame<String>.Card
     
     var body: some View {
-        Text(card.content).font(Font.largeTitle)
+        Text(card.content)
+            .font(card.isMatched ? Font.largeTitle : Font.title3)
             .cardify(isFacedUp: card.isFaceUp)
     }
 }

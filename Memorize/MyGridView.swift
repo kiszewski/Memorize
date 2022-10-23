@@ -62,7 +62,7 @@ struct GridLayout {
         
         x = x * itemWidth
         
-        print("X: \(x) Y: \(y) ")
+//        print("X: \(x) Y: \(y) ")
         return CGPoint(x: x, y: y)
     }
 

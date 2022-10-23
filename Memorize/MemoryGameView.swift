@@ -11,12 +11,15 @@ struct MemoryGameView: View {
     @ObservedObject var emojiGame: EmojiMemoryGame
     
     var body: some View {
-        MyGridView(items: emojiGame.cards) { card in
-            CardView(card: card).onTapGesture {
-                emojiGame.choose(card: card)
-                   
+        VStack {
+            MyGridView(items: emojiGame.cards) { card in
+                CardView(card: card).onTapGesture {
+                    if(!card.isMatched) {
+                        emojiGame.choose(card: card)
+                    }
+                }.padding()
             }
-            .padding()
+            Button(action: emojiGame.restart, label: { Text("Reiniciar")})
         }
     }
 }
@@ -26,18 +29,8 @@ struct CardView: View {
     var card: MemoryGame<String>.Card
     
     var body: some View {
-        ZStack {
-            if(card.isFaceUp) {
-                RoundedRectangle(cornerRadius: 8)
-                    .stroke(lineWidth: 3)
-                RoundedRectangle(cornerRadius:8)
-                    .fill(Color.white)
-                Text(card.content).font(Font.largeTitle)
-            } else {
-                RoundedRectangle(cornerRadius:8)
-            }
-        }
-        .foregroundColor(Color.orange)
+        Text(card.content).font(Font.largeTitle)
+            .cardify(isFacedUp: card.isFaceUp)
     }
 }
 
